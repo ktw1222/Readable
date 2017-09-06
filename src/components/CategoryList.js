@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
+
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 import Category from './Category';
+
 
 class CategoryList extends Component {
   render() {
@@ -18,4 +23,4 @@ class CategoryList extends Component {
   }
 }
 
-export default CategoryList
+export default withRouter(connect()(CategoryList))

@@ -4,7 +4,7 @@ const initialState = {
   posts: []
 }
 
-function posts(state=initialState, action) {
+ export default (state = initialState, action) => {
   switch (action.type) {
     case GET_POSTS :
       return Object.assign({}, state, {
@@ -15,5 +15,3 @@ function posts(state=initialState, action) {
       return state
   }
 }
-
-export default posts
