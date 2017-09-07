@@ -15,7 +15,7 @@ class CategoryList extends Component {
       <div className="categories">
         {categories.map((category, index) => (
           <div key={index}>
-            <Category categoryId={category.path} />
+            <Category categoryUuid={category.path} />
           </div>
         ))}
       </div>

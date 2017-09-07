@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
 
-// import Category from './components/Category';
 import CategoryList from './components/CategoryList';
 import Category from './components/Category';
 import Post from './components/Post';
 
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link, Route } from 'react-router-dom';
 
 import { getCategories } from './actions/categories';
 import { getPosts } from './actions/posts';
@@ -28,11 +27,17 @@ class App extends Component {
 
           <h2>Readable</h2>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
 
-        <CategoryList categories={categories} />
+        <p className="App-intro"></p>
+
+        <Link
+          className="appLink"
+          to="/"
+        >Home</Link>
+        <Route exact path="/" render={() => <CategoryList categories={categories}/>}/>
+        <Route exact path="/categories/:categoryUuid" render={() => <Category />}/>
+        <Route exact path="/categories/:categoryUuid/posts/:postUuid" render={() => <Post />}/>
+
       </div>
     )
   }
