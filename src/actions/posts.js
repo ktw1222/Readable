@@ -1,6 +1,7 @@
 import * as api from '../utils/api';
 
 export const GET_POSTS = "GET_POSTS"
+export const CHANGE_ORDER_POSTS = "CHANGE_ORDER_POSTS"
 
 export function loadPosts(posts) {
   return {
@@ -18,3 +19,8 @@ export function getPosts() {
     })
   }
 }
+
+export const changeOrderPosts = order => ({
+  type: CHANGE_ORDER_POSTS,
+  order
+})
