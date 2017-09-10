@@ -26,13 +26,13 @@ export const getPosts = (id = '') => {
   .then(res => res.json());
 }
 
-export const addPost = ({id, timestamp, title, body, owner, category}) => {
+export const addPost = ({id, timestamp, title, body, author, category}) => {
   return fetch(`${api}/posts`, { headers, method: 'POST', body: JSON.stringify({
     id,
     timestamp,
     title,
     body,
-    owner,
+    author,
     category
   })})
   .then(res => res.json());
@@ -43,12 +43,12 @@ export const editPost = (id = '', {title, body}) => {
     title,
     body,
   })})
-  .then(res => res.json());
+  .then(res => {return;});
 }
 
 export const deletePost = (id = '') => {
   return fetch(`${api}/posts/${id}`, { headers, method: 'DELETE'})
-  .then(res => res.json());
+  .then(res => {return;});
 }
 
 export const votePost = (id = '', typeVote) => {
@@ -64,15 +64,15 @@ export const getCommentsByPost = (id = '') => {
   .then(res => res.json());
 }
 
-export const addCommentToPost = ({id, timestamp, body, owner, postId}) => {
+export const addCommentToPost = ({id, timestamp, body, author, parentId}) => {
   return fetch(`${api}/posts/${id}`, { headers, method: 'POST', body: JSON.stringify({
     id,
     timestamp,
     body,
-    owner,
-    parentId: postId
+    author,
+    parentId
   })})
-  .then(res => res.json());
+  .then(res => {return;});
 }
 
 export const getCommentById = (id = '') => {
@@ -85,15 +85,15 @@ export const editComment = ({ timestamp, id, body }) => {
     body,
     timestamp
   })})
-  .then(res => res.json());
+  .then(res => {return;});
 }
 
 export const deleteComment = (id = '') => {
   return fetch(`${api}/comments/${id}`, { headers, method: 'DELETE' })
-  .then(res => res.json());
+  .then(res => {return;});
 }
 
 export const voteComment = (id = '') => {
   return fetch(`${api}/comments/${id}`, { headers, method: 'POST' })
-  .then(res => res.json());
+  .then(res => {return;});
 }
