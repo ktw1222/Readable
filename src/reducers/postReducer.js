@@ -3,8 +3,8 @@ import {
   ADD_POST,
   UPDATE_POST,
   DELETE_POST,
-  UPVOTE_POST,
-  DOWNVOTE_POST
+  LIKE_POST,
+  DISLIKE_POST
 } from '../actions/posts';
 
 const initialState = {
@@ -18,8 +18,8 @@ export default (state = initialState, action) => {
     case ADD_POST :
     case UPDATE_POST :
     case DELETE_POST :
-    case UPVOTE_POST :
-    case DOWNVOTE_POST :
+    case LIKE_POST :
+    case DISLIKE_POST :
       return Object.assign({}, state, {
         posts: action.posts
       })

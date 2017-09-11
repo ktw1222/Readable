@@ -3,8 +3,8 @@ import {
   ADD_COMMENT,
   UPDATE_COMMENT,
   DELETE_COMMENT,
-  UPVOTE_COMMENT,
-  DOWNVOTE_COMMENT
+  LIKE_COMMENT,
+  DISLIKE_COMMENT
 } from '../actions/comments';
 
 const initialState = {
@@ -17,8 +17,8 @@ export default (state = initialState, action) => {
     case ADD_COMMENT :
     case UPDATE_COMMENT :
     case DELETE_COMMENT :
-    case UPVOTE_COMMENT :
-    case DOWNVOTE_COMMENT :
+    case LIKE_COMMENT :
+    case DISLIKE_COMMENT :
       return Object.assign({}, state, {
         comments: action.comments
       })

@@ -4,11 +4,11 @@ export const GET_COMMENTS_BY_POST_ID = "GET_COMMENTS_BY_POST_ID"
 export const ADD_COMMENT = "ADD_COMMENT"
 export const UPDATE_COMMENT = "UPDATE_COMMENT"
 export const DELETE_COMMENT = "DELETE_COMMENT"
-export const UPVOTE_COMMENT = "UPVOTE_COMMENT"
-export const DOWNVOTE_COMMENT = "DOWNVOTE_COMMENT"
+export const LIKE_COMMENT = "LIKE_COMMENT"
+export const DISLIKE_COMMENT = "DISLIKE_COMMENT"
 
 //GET_COMMENTS_BY_POST_ID
-export function loadComments(comments) {
+export function getCommentsAction(comments) {
   return {
     type: GET_COMMENTS_BY_POST_ID,
     comments: comments
@@ -20,7 +20,7 @@ export function getCommentsByPost(postId) {
     api
       .getCommentsByPost(postId)
       .then((comments) => {
-        dispatch(loadComments(comments))
+        dispatch(getCommentsAction(comments))
       })
   }
 }
@@ -55,8 +55,8 @@ export function updateCommentAction(comments) {
 
 export function updateComment(comment) {
   return (dispatch) => {
-    api.
-      editComment(comment)
+    api
+      .editComment(comment)
       .then(() => {
         api.getCommentsByPost(comment.parentId).then((comments) => {
           dispatch(updateCommentAction(comments))
@@ -75,8 +75,8 @@ export function deleteCommentAction(comments) {
 
 export function deleteComment(commentUuid, postUuid) {
   return (dispatch) => {
-    api.
-      deleteComment(commentUuid)
+    api
+      .deleteComment(commentUuid)
       .then(() => {
         api.getCommentsByPost(postUuid).then((comments) => {
           dispatch(deleteCommentAction(comments))
@@ -86,40 +86,40 @@ export function deleteComment(commentUuid, postUuid) {
 }
 
 //UPVOTE_COMMENT
-export function upvoteCommentAction(comments) {
+export function likeCommentAction(comments) {
   return {
-    type: UPVOTE_COMMENT,
+    type: LIKE_COMMENT,
     comments: comments
   }
 }
 
-export function upvoteComment(postId, commentId) {
+export function likeComment(postId, commentId) {
   return (dispatch) => {
     api
       .voteComment(commentId, 'upVote')
       .then(() => {
         api.getCommentsByPost(postId).then((comments) => {
-          dispatch(upvoteCommentAction(comments))
+          dispatch(likeCommentAction(comments))
         })
       })
   }
 }
 
 //DOWNVOTE_COMMENT
-export function downvoteCommentAction(comments) {
+export function dislikeCommentAction(comments) {
   return {
-    type: DOWNVOTE_COMMENT,
+    type: DISLIKE_COMMENT,
     comments: comments
   }
 }
 
-export function downvoteComment(postId, commentId) {
+export function dislikeComment(postId, commentId) {
   return (dispatch) => {
     api
-      .voteComment(commentId)
+      .voteComment(commentId, 'downVote')
       .then(() => {
-        api.getCommentsByPost(postId).then(() => {
-          dispatch(downvoteCommentAction(comments))
+        api.getCommentsByPost(postId).then((comments) => {
+          dispatch(dislikeCommentAction(comments))
         })
       })
   }

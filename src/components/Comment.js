@@ -1,18 +1,87 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import Modal from 'react-modal';
+
+import CommentForm from './CommentForm';
+
+import { deleteComment, likeComment, dislikeComment } from '../actions/comments';
 
 class Comment extends Component {
+  state = {
+    modalOpen : false
+  }
+
+  closeModal = () => {
+    this.setState({ modalOpen: false });
+  }
+
+  getPost = () => {
+    const comment = this.props.comment;
+    return {
+      id: comment.parentId
+    }
+  }
+
+  getComment = () => {
+    const { body, author, id, timestamp } = this.props.comment || {};
+    return {
+      body,
+      author,
+      id,
+      timestamp,
+    }
+  }
+
+  editComment = (ev) => {
+    ev.preventDefault();
+    this.setState({ modalOpen: true });
+  }
+
+  deleteComment = (ev) => {
+    ev.preventDefault();
+    this.props.deleteComment(this.props.comment.id, this.props.comment.parentId);
+  }
+
+  likeComment = (ev) => {
+    ev.preventDefault();
+    const { id, parentId } = this.props.comment;
+    this.props.likeComment(parentId, id);
+  }
+
+  dislikeComment = (ev) => {
+    ev.preventDefault();
+    const { id, parentId } = this.props.comment;
+    this.props.dislikeComment(parentId, id);
+  }
+
   render() {
     const { body, author, voteScore, timestamp } = this.props.comment;
 
     return (
       <div className="comment">
-        <h3>Comment</h3>
+        <div className="comment-title">
+          <button className="comment-title-content" onClick={this.likeComment}>Like comment</button>
+          <button className="comment-title-content" onClick={this.dislikeComment}>dislike comment</button>
+          <h3 className="comment-title-content">Comment</h3>
+          <button className="comment-title-content" onClick={this.editComment}>Edit comment</button>
+          <button className="comment-title-content" onClick={this.deleteComment}>Delete comment</button>
+        </div>
         <p>By: {author}</p>
         <p>Body: {body}</p>
         <p>Vote Score: {voteScore}</p>
         <p>Time: {new Date(timestamp).toString()}</p>
+
+        <Modal
+            className='modal'
+            overlayClassName='overlay'
+            isOpen={this.state.modalOpen}
+            onRequestClose={this.closeModal}
+            contentLabel='Modal'
+          >
+            <CommentForm closeForm={this.closeModal} isUpdate={true} post={this.getPost()} comment={this.getComment()} />
+          </Modal>
+
       </div>
     )
   }
@@ -25,4 +94,12 @@ function mapStateToProps(state, props) {
   }
 }
 
-export default withRouter(connect(mapStateToProps)(Comment))
+function mapDispatchToProps(dispatch) {
+  return {
+    likeComment: (postUuid, commentUuid) => dispatch(likeComment(postUuid, commentUuid)),
+    dislikeComment: (postUuid, commentUuid) => dispatch(dislikeComment(postUuid, commentUuid)),
+    deleteComment: (postUuid, commentUuid) => dispatch(deleteComment(postUuid, commentUuid)),
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Comment))

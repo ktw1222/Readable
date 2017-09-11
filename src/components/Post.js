@@ -1,14 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
+import Modal from 'react-modal';
+
+import PostForm from './PostForm';
 
 import Comment from './Comment';
+import CommentForm from './CommentForm';
+
+import { deletePost, likePost, dislikePost } from '../actions/posts';
 import { getCommentsByPost } from '../actions/comments';
 
 
 class Post extends Component {
   state = {
-    sorting: "voteScore"
+    sorting: "voteScore",
+    modalOpenPost: false,
+    modalOpenComment: false,
+    post: {}
   }
 
   onChange = (ev) => {
@@ -20,6 +29,61 @@ class Post extends Component {
     if (this.props.match.params.postUuid) {
       this.props.fetchCommentsByPost(this.props.match.params.postUuid)
     }
+  }
+
+  getPost = () => {
+    const { id, body, title, author, timestamp, category } = this.props.post;
+
+    return {
+      id,
+      author,
+      timestamp,
+      body,
+      title,
+      category,
+    }
+  }
+
+  getPostUuid = () => {
+    return this.props.postUuid || this.props.match.params.postUuid;
+  }
+
+  likePost = (ev) => {
+    ev.preventDefault();
+    this.props.likePost(this.getPostUuid())
+  }
+
+  dislikePost = (ev) => {
+    ev.preventDefault();
+    this.props.dislikePost(this.getPostUuid())
+  }
+
+  editPost = (ev) => {
+    ev.preventDefault();
+    this.setState({ modalOpen : true })
+  }
+
+  closeModalPost = () => {
+    this.setState({ modalOpenPost : false })
+  }
+
+  editPostHandler = (ev) => {
+    ev.preventDefault();
+    this.setState({ modalOpenPost: true });
+  }
+
+  deletePostHandler = (ev) => {
+    ev.preventDefault();
+    this.props.deletePost(this.props.post.id);
+  }
+
+  closeModalComment = () => {
+    this.setState({ modalOpenComment : false})
+  }
+
+  addCommentHandler = (ev) => {
+    ev.preventDefault();
+    this.setState({ modalOpenComment: true });
   }
 
   getCommentsView = () => {
@@ -43,7 +107,7 @@ class Post extends Component {
 
   render() {
     const { title, body, author, timestamp, voteScore } = this.props.post
-    const { showComment } = this.props
+    const { showComment, showDetail } = this.props
 
     let commentsView = null;
     if (showComment) {
@@ -51,21 +115,64 @@ class Post extends Component {
     }
 
     return (
-      <div>
-        <h3>Post: {title} </h3>
-        <p>{body}</p>
+    <div className="post">
+        <div className="post-title">
+          <button className="post-title-content" onClick={this.likePost}>Like post</button>
+          <button className="post-title-content" onClick={this.dislikePost}>Dislike post</button>
+          <Link
+            className="postLink"
+            to={this.props.linkPost}
+          >
+            <h3 className="post-title-content">{title}</h3>
+          </Link>
+          <button className="post-title-content" onClick={this.editPostHandler}>Edit post</button>
+          <button className="post-title-content" onClick={this.deletePostHandler}>Delete post</button>
+          {showDetail
+            ? <button className="post-title-content" onClick={this.addCommentHandler}>Add comment</button>
+            : null}
+        </div>
+
         <p>By: {author}</p>
         <p>Vote Score: {voteScore}</p>
         <p>Time: {new Date(timestamp).toString()}</p>
-        <div>
-          <select value={this.state.sorting} onChange={this.onChange}>
-            <option value="voteScore">Vote Score</option>
-            <option value="timestamp">Time</option>
-          </select>
+        {showDetail
+          ? <div>
+              <p>Body: {body}</p>
+            </div>
+          : null}
+        {
+          <div>
+            <label>Order comments </label>
+            <select value={this.state.sorting} onChange={this.onChange} ref="sortingSelector">
+              <option value="voteScore">Vote Score</option>
+              <option value="timestamp">Time</option>
+            </select>
 
-          { commentsView }
-        </div>
-      </div>
+            { commentsView }
+
+          </div>
+        }
+
+        <Modal
+          className='modal'
+          overlayClassName='overlay'
+          isOpen={this.state.modalOpenComment}
+          onRequestClose={this.closeModalComment}
+          contentLabel='Modal'
+          >
+          <CommentForm closeForm={this.closeModalComment} isUpdate={false} post={this.getPost()} />
+        </Modal>
+
+        <Modal
+          className='modal'
+          overlayClassName='overlay'
+          isOpen={this.state.modalOpenPost}
+          onRequestClose={this.closeModalPost}
+          contentLabel='Modal'
+        >
+          <PostForm closeForm={this.closeModalPost} isUpdate={true} post={this.getPost()} />
+        </Modal>
+    </div>
     )
   }
 }
@@ -78,13 +185,17 @@ function mapStateToProps(state, props) {
   return {
     post: post,
     comments: comments,
-    showComment: props.match.params.postUuid !== undefined
+    showComment: props.match.params.postUuid !== undefined,
+    showDetail: props.match.params.postUuid !== undefined
   }
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    fetchCommentsByPost: (postUuid) => dispatch(getCommentsByPost(postUuid))
+    fetchCommentsByPost: (postUuid) => dispatch(getCommentsByPost(postUuid)),
+    deletePost: (postUuid) => dispatch(deletePost(postUuid)),
+    dislikePost: (postUuid) => dispatch(dislikePost(postUuid)),
+    likePost: (postUuid) => dispatch(likePost(postUuid))
   }
 }
 

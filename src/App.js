@@ -24,7 +24,6 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-
           <h2>Readable</h2>
         </div>
 
@@ -36,7 +35,7 @@ class App extends Component {
         >Home</Link>
         <Route exact path="/" render={() => <CategoryList categories={categories}/>}/>
         <Route exact path="/categories/:categoryUuid" render={() => <Category />}/>
-        <Route exact path="/categories/:categoryUuid/posts/:postUuid" render={() => <Post />}/>
+        <Route exact path="/categories/:categoryUuid/posts/:postUuid" render={({ match }) => <Post linkPost={"/categories/" + match.params.categoryUuid + "/posts/" + match.params.postUuid } />}/>
 
       </div>
     )

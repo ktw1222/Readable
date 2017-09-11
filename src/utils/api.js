@@ -1,12 +1,10 @@
 const api = "http://localhost:5001"
-
-let token = localStorage.token
-
-if (!token) token = localStorage.token = Math.random().toString(36).substr(-8)
+const TOKEN = '503a657b-1e4c-445b-b745-86341694f8df';
 
 const headers = {
-  Accept: "application/json",
-  Authorization: token
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+  'Authorization': TOKEN
 }
 
 //Categories
@@ -15,12 +13,12 @@ export const getCategories = () => {
   .then(res => res.json());
 }
 
+//Posts
 export const getPostsByCategory = (category) => {
   return fetch(`${api}/${category}/posts`, { headers })
   .then(res => res.json());
 }
 
-//Posts
 export const getPosts = (id = '') => {
   return fetch(`${api}/posts/${id}`, { headers })
   .then(res => res.json());
@@ -65,7 +63,7 @@ export const getCommentsByPost = (id = '') => {
 }
 
 export const addCommentToPost = ({id, timestamp, body, author, parentId}) => {
-  return fetch(`${api}/posts/${id}`, { headers, method: 'POST', body: JSON.stringify({
+  return fetch(`${api}/comments`, { headers, method: 'POST', body: JSON.stringify({
     id,
     timestamp,
     body,
@@ -85,15 +83,17 @@ export const editComment = ({ timestamp, id, body }) => {
     body,
     timestamp
   })})
-  .then(res => {return;});
+  .then(() => {return;});
 }
 
 export const deleteComment = (id = '') => {
   return fetch(`${api}/comments/${id}`, { headers, method: 'DELETE' })
-  .then(res => {return;});
+  .then(() => {return;});
 }
 
-export const voteComment = (id = '') => {
-  return fetch(`${api}/comments/${id}`, { headers, method: 'POST' })
-  .then(res => {return;});
+export const voteComment = (id = '', typeVote) => {
+  return fetch(`${api}/comments/${id}`, { headers, method: 'POST', body: JSON.stringify({
+    option: typeVote
+  })})
+  .then(() => {return;});
 }

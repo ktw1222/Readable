@@ -4,11 +4,11 @@ export const GET_POSTS = "GET_POSTS"
 export const ADD_POST = "ADD_POST"
 export const UPDATE_POST = "UPDATE_POST"
 export const DELETE_POST = "DELETE_POST"
-export const UPVOTE_POST = "UPVOTE_POST"
-export const DOWNVOTE_POST = "DOWNVOTE_POST"
+export const LIKE_POST = "LIKE_POST"
+export const DISLIKE_POST = "DISLIKE_POST"
 
 //GET_POSTS
-export function loadPosts(posts) {
+export function getPostsAction(posts) {
   return {
     type: GET_POSTS,
     posts: posts.filter(post => post.deleted === false)
@@ -20,7 +20,7 @@ export function getPosts() {
     api
       .getPosts()
       .then((posts) => {
-        dispatch(loadPosts(posts));
+        dispatch(getPostsAction(posts));
     })
   }
 }
@@ -38,10 +38,9 @@ export function addPost(post) {
     api
       .addPost(post)
       .then(() => {
-        api.getPosts()
-          .then(posts => {
-            dispatch(addPostAction(posts));
-          })
+        api.getPosts().then(posts => {
+          dispatch(addPostAction(posts));
+        })
       })
   }
 }
@@ -50,7 +49,7 @@ export function addPost(post) {
 export function updatePostAction(posts) {
   return {
     type: UPDATE_POST,
-    posts: post.filter(post => post.deleted === false)
+    posts: posts.filter(post => post.deleted === false)
   }
 }
 
@@ -90,39 +89,39 @@ export function deletePost(postUuid) {
 }
 
 //UPVOTE_POST
-export function upvotePostAction(posts) {
+export function likePostAction(posts) {
   return {
-    type: UPVOTE_POST,
+    type: LIKE_POST,
     posts: posts.filter(post => post.deleted === false)
   }
 }
 
-export function upvotePost(postId) {
+export function likePost(postId) {
   return (dispatch) => {
     api
       .votePost(postId, 'upVote')
       .then(() => {
         api.getPosts().then(posts => {
-          dispatch(upvotePostAction(posts))
+          dispatch(likePostAction(posts))
       })
     })
   }
 }
 
 //DOWNVOTE_POST
-export function downvotePostAction(postId) {
+export function dislikePostAction(postId) {
   return {
-    type: DOWNVOTE_POST
+    type: DISLIKE_POST
   }
 }
 
-export function downvotePost(postId) {
+export function dislikePost(postId) {
   return (dispatch) => {
     api
       .votePost(postId, 'downVote')
-      .then(() => {
+      .then((posts) => {
         api.getPosts().then(posts => {
-          dispatch(downvotePostAction(posts))
+          dispatch(likePostAction(posts))
       })
     })
   }
