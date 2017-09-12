@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
 
+import { capitalize } from '../utils/helpers';
 import { getCategories } from '../actions/categories';
 import { getPosts } from '../actions/posts';
 
 import Post from './Post';
 import PostForm from './PostForm';
+
+import AddButton from 'react-icons/lib/fa/plus-square-o';
 
 class Category extends Component {
 
@@ -58,11 +61,12 @@ class Category extends Component {
     return (
       <div className="category">
         <div className="category-title">
-          <h2 className="category-title-content">Category {category.name}</h2>
-          <button className="category-title-content" onClick={this.openModal}>Add post</button>
+          <Link
+            className="categoryLink"
+            to={"/categories/" + category.path}
+          ><h2 className="category-title-content">{capitalize(category.name)}</h2></Link>
+          <button className="category-title-content" onClick={this.openModal}><AddButton size={20}/></button>
         </div>
-
-        <h4>Path {category.path}</h4>
 
         <label>Order posts: </label>
         <select value={this.state.sorting} onChange={this.onChange} ref="sortingSelector">

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Category from './Category';
@@ -12,10 +12,6 @@ class CategoryList extends Component {
     const categoriesView = categories.map((category, index) => (
       <div key={index}>
         <Category categoryUuid={category.path} />
-        <Link
-          className="categoryLink"
-          to={"/categories/" + category.path}
-        >Go to the category</Link>
       </div>
     ))
 

@@ -11,6 +11,11 @@ import CommentForm from './CommentForm';
 import { deletePost, likePost, dislikePost } from '../actions/posts';
 import { getCommentsByPost } from '../actions/comments';
 
+import LikeButton from 'react-icons/lib/fa/thumbs-o-up';
+import DislikeButton from 'react-icons/lib/fa/thumbs-o-down';
+import DeleteButton from 'react-icons/lib/fa/trash-o';
+import AddButton from 'react-icons/lib/fa/plus-square-o';
+import EditButton from 'react-icons/lib/fa/wrench';
 
 class Post extends Component {
   state = {
@@ -117,18 +122,18 @@ class Post extends Component {
     return (
     <div className="post">
         <div className="post-title">
-          <button className="post-title-content" onClick={this.likePost}>Like post</button>
-          <button className="post-title-content" onClick={this.dislikePost}>Dislike post</button>
+          <button className="post-title-content" onClick={this.likePost}><LikeButton size={20}/></button>
+          <button className="post-title-content" onClick={this.dislikePost}><DislikeButton size={20}/></button>
           <Link
             className="postLink"
             to={this.props.linkPost}
           >
             <h3 className="post-title-content">{title}</h3>
           </Link>
-          <button className="post-title-content" onClick={this.editPostHandler}>Edit post</button>
-          <button className="post-title-content" onClick={this.deletePostHandler}>Delete post</button>
+          <button className="post-title-content" onClick={this.editPostHandler}><EditButton size={20}/></button>
+          <button className="post-title-content" onClick={this.deletePostHandler}><DeleteButton size={20}/></button>
           {showDetail
-            ? <button className="post-title-content" onClick={this.addCommentHandler}>Add comment</button>
+            ? <button className="post-title-content" onClick={this.addCommentHandler}><AddButton size={20}/></button>
             : null}
         </div>
 

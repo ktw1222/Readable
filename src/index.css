@@ -4,6 +4,53 @@ body {
   font-family: sans-serif;
 }
 
+.App {
+  text-align: center;
+}
+
+.category-title-content {
+  display: inline-block;
+  margin-left: 1rem;
+}
+
+.post-title-content {
+  display: inline-block;
+  margin-left: 1rem;
+}
+
+.comment-title-content {
+  display: inline-block;
+  margin-left: 1rem;
+}
+
+.header-title {
+  background-color: #222;
+  height: 50px;
+  padding: 20px;
+  color: white;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  border: 1px solid #e7e7e7;
+  background-color: #f3f3f3;
+}
+
+.headerLink {
+  font-size: 20px;
+  padding: 10px 10px;
+  text-decoration: none;
+}
+
+.header-category {
+  display: inline-block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
 .overlay {
   position: fixed;
   top: 0px;

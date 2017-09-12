@@ -7,6 +7,11 @@ import CommentForm from './CommentForm';
 
 import { deleteComment, likeComment, dislikeComment } from '../actions/comments';
 
+import LikeButton from 'react-icons/lib/fa/thumbs-o-up';
+import DislikeButton from 'react-icons/lib/fa/thumbs-o-down';
+import DeleteButton from 'react-icons/lib/fa/trash-o';
+import EditButton from 'react-icons/lib/fa/wrench';
+
 class Comment extends Component {
   state = {
     modalOpen : false
@@ -61,11 +66,11 @@ class Comment extends Component {
     return (
       <div className="comment">
         <div className="comment-title">
-          <button className="comment-title-content" onClick={this.likeComment}>Like comment</button>
-          <button className="comment-title-content" onClick={this.dislikeComment}>dislike comment</button>
+          <button className="comment-title-content" onClick={this.likeComment}><LikeButton size={20}/></button>
+          <button className="comment-title-content" onClick={this.dislikeComment}><DislikeButton size={20}/></button>
           <h3 className="comment-title-content">Comment</h3>
-          <button className="comment-title-content" onClick={this.editComment}>Edit comment</button>
-          <button className="comment-title-content" onClick={this.deleteComment}>Delete comment</button>
+          <button className="comment-title-content" onClick={this.editComment}><EditButton size={20}/></button>
+          <button className="comment-title-content" onClick={this.deleteComment}><DeleteButton size={20}/></button>
         </div>
         <p>By: {author}</p>
         <p>Body: {body}</p>
