@@ -9,7 +9,7 @@ The back end API code is located here: https://github.com/udacity/reactnd-projec
 ### Installing
 *Backend API downloads
 ```
-git clone https://github.com/udacity/reactnd-project-readable-starter
+git clone https://github.com/ktw1222/reactnd-project-readable-starter.git
 npm install
 node server.js
 ```
