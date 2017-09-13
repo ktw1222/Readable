@@ -51,6 +51,15 @@ ul {
   text-decoration: none;
 }
 
+.category-title-content {
+  background-color: #EBFBE4;
+  color: black;
+}
+
+.post-title-content {
+  background-color: #E4FBFB;
+}
+
 .overlay {
   position: fixed;
   top: 0px;

@@ -5,8 +5,6 @@ import { capitalize } from '../utils/helpers';
 
 class Header extends Component {
   render() {
-
-
     return (
       <div className="header">
         <div className="header-title">

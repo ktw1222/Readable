@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Modal from 'react-modal';
 
 import { capitalize } from '../utils/helpers';
 import { getCategories } from '../actions/categories';
@@ -10,6 +9,7 @@ import { getPosts } from '../actions/posts';
 import Post from './Post';
 import PostForm from './PostForm';
 
+import Modal from 'react-modal';
 import AddButton from 'react-icons/lib/fa/plus-square-o';
 
 class Category extends Component {
@@ -64,14 +64,15 @@ class Category extends Component {
           <Link
             className="categoryLink"
             to={"/categories/" + category.path}
-          ><h2 className="category-title-content">{capitalize(category.name)}</h2></Link>
-          <button className="category-title-content" onClick={this.openModal}><AddButton size={20}/></button>
+          ><h2 className="category-title-content">{capitalize(category.name)}</h2>
+          </Link>
+          <button className="category-title-content" onClick={this.openModal}><AddButton size={15}/></button>
         </div>
 
         <label>Order posts: </label>
         <select value={this.state.sorting} onChange={this.onChange} ref="sortingSelector">
-          <option value="timestamp">By time</option>
-          <option value="score">By score</option>
+          <option value="score">Vote Score</option>
+          <option value="timestamp">Time</option>
         </select>
 
         { postsView }

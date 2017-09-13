@@ -3,10 +3,9 @@ import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import Modal from 'react-modal';
 
-import PostForm from './PostForm';
-
 import Comment from './Comment';
 import CommentForm from './CommentForm';
+import PostForm from './PostForm';
 
 import { deletePost, likePost, dislikePost } from '../actions/posts';
 import { getCommentsByPost } from '../actions/comments';
@@ -113,50 +112,45 @@ class Post extends Component {
   render() {
     const { title, body, author, timestamp, voteScore } = this.props.post
     const { showComment, showDetail } = this.props
-
-    let commentsView = null;
-    if (showComment) {
-      commentsView = this.getCommentsView()
-    }
+    const commentsView = showComment ? this.getCommentsView() : null
 
     return (
     <div className="post">
         <div className="post-title">
-          <button className="post-title-content" onClick={this.likePost}><LikeButton size={20}/></button>
-          <button className="post-title-content" onClick={this.dislikePost}><DislikeButton size={20}/></button>
           <Link
             className="postLink"
             to={this.props.linkPost}
-          >
-            <h3 className="post-title-content">{title}</h3>
+          ><h3 className="post-title-content">{title}</h3>
           </Link>
-          <button className="post-title-content" onClick={this.editPostHandler}><EditButton size={20}/></button>
-          <button className="post-title-content" onClick={this.deletePostHandler}><DeleteButton size={20}/></button>
+          <button className="post-title-content" onClick={this.likePost}><LikeButton size={15}/></button>
+          <button className="post-title-content" onClick={this.dislikePost}><DislikeButton size={15}/></button>
+          <button className="post-title-content" onClick={this.editPostHandler}><EditButton size={15}/></button>
+          <button className="post-title-content" onClick={this.deletePostHandler}><DeleteButton size={15}/></button>
           {showDetail
-            ? <button className="post-title-content" onClick={this.addCommentHandler}><AddButton size={20}/></button>
+            ? <button className="post-title-content" onClick={this.addCommentHandler}><AddButton size={15}/></button>
             : null}
         </div>
 
         <p>By: {author}</p>
         <p>Vote Score: {voteScore}</p>
-        <p>Time: {new Date(timestamp).toString()}</p>
-        {showDetail
+        <p>Time: {new Date(timestamp).toString().slice(0,24)}</p>
+        { showDetail
           ? <div>
               <p>Body: {body}</p>
             </div>
-          : null}
-        {
-          <div>
-            <label>Order comments </label>
-            <select value={this.state.sorting} onChange={this.onChange} ref="sortingSelector">
-              <option value="voteScore">Vote Score</option>
-              <option value="timestamp">Time</option>
-            </select>
+          : null }
 
-            { commentsView }
+        { showDetail
+          ? <div>
+              <label>Order comments </label>
+                <select value={this.state.sorting} onChange={this.onChange} ref="sortingSelector">
+                  <option value="voteScore">Vote Score</option>
+                  <option value="timestamp">Time</option>
+                </select>
 
-          </div>
-        }
+              { commentsView }
+            </div>
+          : null }
 
         <Modal
           className='modal'

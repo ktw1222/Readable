@@ -66,7 +66,6 @@ class CommentForm extends Component {
 
 }
 
-
 function mapStateToProps(state, props) {
   return {};
 }
