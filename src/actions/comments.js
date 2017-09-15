@@ -1,19 +1,12 @@
 import * as api from '../utils/api';
-
-export const GET_COMMENTS_BY_POST_ID = "GET_COMMENTS_BY_POST_ID"
-export const ADD_COMMENT = "ADD_COMMENT"
-export const UPDATE_COMMENT = "UPDATE_COMMENT"
-export const DELETE_COMMENT = "DELETE_COMMENT"
-export const LIKE_COMMENT = "LIKE_COMMENT"
-export const DISLIKE_COMMENT = "DISLIKE_COMMENT"
-
-//GET_COMMENTS_BY_POST_ID
-export function getCommentsAction(comments) {
-  return {
-    type: GET_COMMENTS_BY_POST_ID,
-    comments: comments
-  }
-}
+import {
+  getCommentsAction,
+  addCommentAction,
+  updateCommentAction,
+  deleteCommentAction,
+  likeCommentAction,
+  dislikeCommentAction
+} from './types';
 
 export function getCommentsByPost(postId) {
   return (dispatch) => {
@@ -22,14 +15,6 @@ export function getCommentsByPost(postId) {
       .then((comments) => {
         dispatch(getCommentsAction(comments))
       })
-  }
-}
-
-//ADD_COMMENT
-export function addCommentAction(comments) {
-  return {
-    type: ADD_COMMENT,
-    comments: comments
   }
 }
 
@@ -45,14 +30,6 @@ export function addComment(comment) {
   }
 }
 
-//UPDATE_COMMENT
-export function updateCommentAction(comments) {
-  return {
-    type: UPDATE_COMMENT,
-    comments: comments
-  }
-}
-
 export function updateComment(comment) {
   return (dispatch) => {
     api
@@ -62,14 +39,6 @@ export function updateComment(comment) {
           dispatch(updateCommentAction(comments))
         })
       })
-  }
-}
-
-//DELETE_COMMENT
-export function deleteCommentAction(comments) {
-  return {
-    type: DELETE_COMMENT,
-    comments: comments
   }
 }
 
@@ -85,14 +54,6 @@ export function deleteComment(commentUuid, postUuid) {
   }
 }
 
-//UPVOTE_COMMENT
-export function likeCommentAction(comments) {
-  return {
-    type: LIKE_COMMENT,
-    comments: comments
-  }
-}
-
 export function likeComment(postId, commentId) {
   return (dispatch) => {
     api
@@ -102,14 +63,6 @@ export function likeComment(postId, commentId) {
           dispatch(likeCommentAction(comments))
         })
       })
-  }
-}
-
-//DOWNVOTE_COMMENT
-export function dislikeCommentAction(comments) {
-  return {
-    type: DISLIKE_COMMENT,
-    comments: comments
   }
 }
 

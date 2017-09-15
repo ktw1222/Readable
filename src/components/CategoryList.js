@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 import Category from './Category';
 
@@ -23,12 +22,4 @@ class CategoryList extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return { };
-}
-
-function mapDispatchToProps(dispatch) {
-  return { };
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CategoryList))
+export default withRouter(CategoryList)

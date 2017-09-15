@@ -73,16 +73,8 @@ class PostForm extends Component {
   }
 }
 
-
 function mapStateToProps(state, props) {
   return {};
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    addPost: (post) => dispatch(addPost(post)),
-    updatePost: (post) => dispatch(updatePost(post)),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostForm)
+export default connect(mapStateToProps, { addPost, updatePost })(PostForm)

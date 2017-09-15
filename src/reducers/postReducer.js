@@ -5,7 +5,7 @@ import {
   DELETE_POST,
   LIKE_POST,
   DISLIKE_POST
-} from '../actions/posts';
+} from '../actions/types';
 
 const initialState = {
   posts: []

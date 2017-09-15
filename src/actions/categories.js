@@ -1,14 +1,5 @@
 import * as api from '../utils/api';
-
-export const GET_CATEGORIES = "GET_CATEGORIES"
-export const GET_POSTS_BY_CATEGORY = "GET_POSTS_BY_CATEGORY"
-
-export function getCategoriesAction(categories) {
-  return {
-    type: GET_CATEGORIES,
-    categories: categories
-  }
-}
+import { getCategoriesAction } from './types';
 
 export function getCategories() {
   return (dispatch) => {

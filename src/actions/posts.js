@@ -1,19 +1,11 @@
 import * as api from '../utils/api';
-
-export const GET_POSTS = "GET_POSTS"
-export const ADD_POST = "ADD_POST"
-export const UPDATE_POST = "UPDATE_POST"
-export const DELETE_POST = "DELETE_POST"
-export const LIKE_POST = "LIKE_POST"
-export const DISLIKE_POST = "DISLIKE_POST"
-
-//GET_POSTS
-export function getPostsAction(posts) {
-  return {
-    type: GET_POSTS,
-    posts: posts.filter(post => post.deleted === false)
-  }
-}
+import {
+  getPostsAction,
+  addPostAction,
+  updatePostAction,
+  deletePostAction,
+  likePostAction,
+} from './types';
 
 export function getPosts() {
   return (dispatch) => {
@@ -22,14 +14,6 @@ export function getPosts() {
       .then((posts) => {
         dispatch(getPostsAction(posts));
     })
-  }
-}
-
-//ADD_POST
-export function addPostAction(posts) {
-  return {
-    type: ADD_POST,
-    posts: posts.filter(post => post.deleted === false)
   }
 }
 
@@ -42,14 +26,6 @@ export function addPost(post) {
           dispatch(addPostAction(posts));
         })
       })
-  }
-}
-
-//UPDATE_POST
-export function updatePostAction(posts) {
-  return {
-    type: UPDATE_POST,
-    posts: posts.filter(post => post.deleted === false)
   }
 }
 
@@ -68,14 +44,6 @@ export function updatePost(post) {
   }
 }
 
-//DELETE_POST
-export function deletePostAction(posts) {
-  return {
-    type: DELETE_POST,
-    posts: posts.filter(post => post.deleted === false)
-  }
-}
-
 export function deletePost(postUuid) {
   return (dispatch) => {
     api
@@ -88,14 +56,6 @@ export function deletePost(postUuid) {
   }
 }
 
-//UPVOTE_POST
-export function likePostAction(posts) {
-  return {
-    type: LIKE_POST,
-    posts: posts.filter(post => post.deleted === false)
-  }
-}
-
 export function likePost(postId) {
   return (dispatch) => {
     api
@@ -105,13 +65,6 @@ export function likePost(postId) {
           dispatch(likePostAction(posts))
       })
     })
-  }
-}
-
-//DOWNVOTE_POST
-export function dislikePostAction(postId) {
-  return {
-    type: DISLIKE_POST
   }
 }
 

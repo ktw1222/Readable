@@ -70,11 +70,4 @@ function mapStateToProps(state, props) {
   return {};
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    addComment: (comment) => dispatch(addComment(comment)),
-    updateComment: (comment) => dispatch(updateComment(comment)),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CommentForm)
+export default connect(mapStateToProps, { addComment, updateComment })(CommentForm)
