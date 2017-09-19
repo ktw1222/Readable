@@ -5,6 +5,7 @@ import CategoryList from './components/CategoryList';
 import Category from './components/Category';
 import Post from './components/Post';
 import Header from './components/Header';
+import NoMatch from './components/NoMatch';
 
 import { connect } from 'react-redux';
 import { withRouter, Route, Switch } from 'react-router-dom';
@@ -29,6 +30,7 @@ class App extends Component {
         <Route exact path="/" render={() => <CategoryList categories={categories}/>}/>
         <Route exact path="/categories/:categoryUuid" render={() => <Category />}/>
         <Route exact path="/categories/:categoryUuid/posts/:postUuid" render={({ match }) => <Post linkPost={"/categories/" + match.params.categoryUuid + "/posts/" + match.params.postUuid } />}/>
+        <Route path="*" component={NoMatch}/>}/>
       </Switch>
       </div>
     )

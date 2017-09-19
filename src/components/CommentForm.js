@@ -66,8 +66,4 @@ class CommentForm extends Component {
 
 }
 
-function mapStateToProps(state, props) {
-  return {};
-}
-
-export default connect(mapStateToProps, { addComment, updateComment })(CommentForm)
+export default connect(null, { addComment, updateComment })(CommentForm)

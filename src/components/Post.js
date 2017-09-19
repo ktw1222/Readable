@@ -6,6 +6,7 @@ import Modal from 'react-modal';
 import Comment from './Comment';
 import CommentForm from './CommentForm';
 import PostForm from './PostForm';
+import NoMatch from './NoMatch';
 
 import { deletePost, likePost, dislikePost } from '../actions/posts';
 import { getCommentsByPost } from '../actions/comments';
@@ -30,9 +31,14 @@ class Post extends Component {
   }
 
   componentDidMount() {
-    if (this.props.match.params.postUuid) {
-      this.props.fetchCommentsByPost(this.props.match.params.postUuid)
-    }
+    if (this.props.post.title !== undefined) {
+      if (this.props.match.params.postUuid ) {
+        return this.props.fetchCommentsByPost(this.props.match.params.postUuid)
+      }
+    } else {
+        return (
+          <NoMatch />
+        )}
   }
 
   getPost = () => {
